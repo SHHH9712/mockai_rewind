@@ -3,6 +3,9 @@ import { ResizablePanel } from "@/components/ui/resizable";
 import { Separator } from "@/components/ui/separator";
 import ReactMarkdown from "react-markdown";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { coldarkCold } from "react-syntax-highlighter/dist/esm/styles/prism";
+import remarkGfm from "remark-gfm";
 
 export default function ProblemPanel({ markdown }: { markdown: string }) {
   return (
@@ -12,7 +15,25 @@ export default function ProblemPanel({ markdown }: { markdown: string }) {
       </div>
       <Separator orientation="horizontal" decorative={true} />
       <ScrollArea className="p-2 text-xs leading-6 overflow-hidden h-full">
-        <ReactMarkdown>{markdown}</ReactMarkdown>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            code({ node, className, children, ...props }) {
+              const match = /language-(\w+)/.exec(className || "");
+              return match ? (
+                <SyntaxHighlighter style={coldarkCold} language={match[1]}>
+                  {String(children).replace(/\n$/, "")}
+                </SyntaxHighlighter>
+              ) : (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              );
+            },
+          }}
+        >
+          {markdown}
+        </ReactMarkdown>
       </ScrollArea>
     </ResizablePanel>
   );
