@@ -24,11 +24,14 @@ export default function FeedbackArea({
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
   return (
-    <div className="grid grid-cols-4">
+    <div className="flex flex-row overflow-x-scroll">
       {Object.keys(feedbacks).map((timestamp) => (
         <Drawer key={timestamp}>
           <DrawerTrigger>
-            <Card key={timestamp} className="m-4 p-4 h-100 w-100">
+            <Card
+              key={timestamp}
+              className="m-4 h-28 w-64 flex flex-col items-center justify-center"
+            >
               <h2 className="text-lg font-semibold">
                 Feedback for {formatTime(parseInt(timestamp))}
               </h2>

@@ -47,7 +47,11 @@ export default function Dashboard({
 
   // use current selected content to get feedbacks from API and stores it in key value pair
   const [feedbacks, setFeedbacks] = useState<{ [key: string]: string }>({
-    "71": "mock value mock value mock value mock value mock value mock value mock value mock value",
+    "00": "Overall feedback",
+    "01": "Feedback for 1:00",
+    "02": "Feedback for 2:00",
+    "03": "Feedback for 3:00",
+    "04": "Feedback for 4:00",
   });
 
   const getFeedback = async () => {
